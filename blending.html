@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ブレンディング | AIこども英語教育 プロトタイプ</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="card" id="app">
+  <div class="confetti-layer" id="confetti"></div>
+
+  <div class="card-header">
+    <span class="card-title">ブレンディング ・ sh + ip</span>
+    <div class="stars" id="stars"></div>
+  </div>
+
+  <!-- レッスンフェーズ -->
+  <div class="phase fade-in" data-phase="lesson">
+    <p class="subtitle">2つのパーツをタップして音を聞き、くっつけて読んでみよう</p>
+
+    <div style="display:flex; justify-content:center; gap:14px; margin-bottom:20px;">
+      <button id="onsetBtn" style="width:96px;height:116px;border-radius:24px;background:#06AED5;border:none;color:white;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:42px;cursor:pointer;box-shadow:0 8px 0 rgba(0,0,0,0.12);">sh</button>
+      <div style="display:flex;align-items:center;color:#B7AE9A;">🔗</div>
+      <button id="rimeBtn" style="width:96px;height:116px;border-radius:24px;background:#FF6B6B;border:none;color:white;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:42px;cursor:pointer;box-shadow:0 8px 0 rgba(0,0,0,0.12);">ip</button>
+    </div>
+
+    <button id="blendBtn" class="btn-outline-gold" style="margin-bottom:22px;">🔊 ship</button>
+
+    <div>
+      <div style="font-size:48px;">🚢</div>
+      <div style="font-family:'Nunito',sans-serif; color:#5C6B73; font-size:13px; margin-top:4px;">sh + ip = ship</div>
+    </div>
+
+    <button id="toQuizBtn" class="btn-primary" style="margin-top:28px;">クイズにチャレンジ →</button>
+  </div>
+
+  <!-- クイズフェーズ -->
+  <div class="phase fade-in hidden" data-phase="quiz">
+    <p class="subtitle">正しいパーツをえらんで単語を完成させよう</p>
+    <div style="font-size:44px; margin-bottom:6px;">🚢</div>
+    <div id="wordDisplay" style="font-family:'Baloo 2',sans-serif; font-weight:800; font-size:34px; color:#B7AE9A; margin-bottom:22px;">
+      ＿ ＿<span style="color:#22333B;">ip</span>
+    </div>
+    <div id="options" style="display:flex; gap:14px; justify-content:center; margin-bottom:24px;"></div>
+    <div id="feedback"></div>
+    <div id="quizActions"></div>
+  </div>
+
+  <!-- 完了フェーズ -->
+  <div class="phase fade-in hidden" data-phase="done" style="padding-top:40px;">
+    <div class="pulse-2x" style="font-size:64px; margin-bottom:12px;">🎉</div>
+    <div class="done-title" style="color:#06AED5;">やったー！</div>
+    <div class="done-sub">sh + ip = ship を読めたね</div>
+    <div class="stars" id="starsDone" style="justify-content:center;"></div>
+    <button id="restartBtn" class="btn-outline-teal" style="margin-top:26px;">もう一度見る</button>
+  </div>
+</div>
+
+<script src="common.js"></script>
+<script src="blending.js"></script>
+</body>
+</html>

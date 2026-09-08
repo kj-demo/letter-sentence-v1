@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>センテンスリーディング | AIこども英語教育 プロトタイプ</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="card" id="app">
+  <div class="confetti-layer" id="confetti"></div>
+
+  <div class="card-header">
+    <span class="card-title">センテンスリーディング</span>
+    <div class="stars" id="stars"></div>
+  </div>
+
+  <!-- レッスンフェーズ -->
+  <div class="phase fade-in" data-phase="lesson">
+    <p class="subtitle">単語をタップして読もう。全部読めたら通して聞いてみよう</p>
+
+    <div style="display:flex; flex-direction:column; align-items:center; margin-bottom:14px;">
+      <div style="font-size:46px; margin-bottom:-6px;">🐈</div>
+      <div style="width:100px; height:22px; background:#C97B4A; border-radius:10px; box-shadow: inset 0 0 0 3px #A85F35;"></div>
+    </div>
+
+    <div id="wordRow" style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:24px; padding:18px 14px; background:#F0FBFB; border:2px solid #06AED5; border-radius:20px;"></div>
+
+    <button id="playAllBtn" class="btn-outline-gold" style="margin-bottom:6px;">🔊 通して聞く</button>
+
+    <button id="toQuizBtn" class="btn-primary" style="margin-top:24px;">クイズにチャレンジ →</button>
+  </div>
+
+  <!-- クイズフェーズ -->
+  <div class="phase fade-in hidden" data-phase="quiz">
+    <p class="subtitle">正しい順番に単語をタップして文を完成させよう</p>
+
+    <div id="builtRow" style="min-height:46px; display:flex; flex-wrap:wrap; gap:6px; justify-content:center; align-items:center; margin-bottom:18px; padding:10px 12px; background:#FFFDF7; border:2px dashed #E2DCCB; border-radius:16px;">
+      <span id="builtPlaceholder" style="font-family:'Nunito',sans-serif; color:#B7AE9A; font-size:13px;">ここに単語が並びます</span>
+    </div>
+
+    <div id="scrambledRow" style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:22px;"></div>
+
+    <div id="feedback"></div>
+    <div id="quizActions"></div>
+  </div>
+
+  <!-- 完了フェーズ -->
+  <div class="phase fade-in hidden" data-phase="done" style="padding-top:40px;">
+    <div class="pulse-2x" style="font-size:64px; margin-bottom:12px;">🎉</div>
+    <div class="done-title" style="color:#FFC43D;">次もがんばろう！</div>
+    <div class="done-sub">"The cat sits on the mat." を読めたね</div>
+    <div class="stars" id="starsDone" style="justify-content:center;"></div>
+    <button id="restartBtn" class="btn-outline-teal" style="margin-top:26px;">もう一度見る</button>
+  </div>
+</div>
+
+<script src="common.js"></script>
+<script src="sentence-reading.js"></script>
+</body>
+</html>

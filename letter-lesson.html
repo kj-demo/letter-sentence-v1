@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>レターレッスン | AIこども英語教育 プロトタイプ</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="card" id="app">
+  <div class="confetti-layer" id="confetti"></div>
+
+  <div class="card-header">
+    <span class="card-title">レターレッスン ・ Letter A</span>
+    <div class="stars" id="stars"></div>
+  </div>
+
+  <!-- レッスンフェーズ -->
+  <div class="phase fade-in" data-phase="lesson">
+    <p class="subtitle">文字をタップして、音を聞いてみよう</p>
+
+    <button id="letterBtn" style="
+      width: 176px; height: 176px; border-radius: 40px; background: #FF6B6B;
+      border: none; color: white; font-family: 'Baloo 2', sans-serif;
+      font-weight: 800; font-size: 96px; line-height: 1; cursor: pointer;
+      box-shadow: 0 10px 0 rgba(0,0,0,0.12); display: inline-flex;
+      align-items: center; justify-content: center; margin: 0 auto;">A</button>
+
+    <div style="display:flex; align-items:center; justify-content:center; gap:6px; margin-top:14px; color:#FF6B6B; font-family:'Nunito',sans-serif; font-weight:800; font-size:13px;">
+      🔊 "a, a, a"
+    </div>
+
+    <button id="wordBtn" style="
+      margin-top: 26px; width: 100%; background: #F0FBFB; border: 2px solid #06AED5;
+      border-radius: 20px; padding: 16px 18px; display:flex; align-items:center; gap:14px; cursor:pointer;">
+      <span style="font-size:40px;">🍎</span>
+      <div style="text-align:left;">
+        <div style="font-family:'Baloo 2',sans-serif; font-weight:700; font-size:22px; color:#22333B;">Apple</div>
+        <div style="font-family:'Nunito',sans-serif; font-size:12px; color:#5C6B73;">タップして発音を聞く</div>
+      </div>
+      <span style="margin-left:auto; color:#06AED5;">🔊</span>
+    </button>
+
+    <button id="toQuizBtn" class="btn-primary" style="margin-top:28px;">クイズにチャレンジ →</button>
+  </div>
+
+  <!-- クイズフェーズ -->
+  <div class="phase fade-in hidden" data-phase="quiz">
+    <p class="subtitle">この音はどの文字？</p>
+
+    <button id="replaySoundBtn" class="btn-outline-gold" style="margin:8px auto 22px;">🔊 もう一度聞く</button>
+
+    <div id="options" style="display:flex; gap:14px; justify-content:center; margin-bottom:24px;"></div>
+
+    <div id="feedback"></div>
+    <div id="quizActions"></div>
+  </div>
+
+  <!-- 完了フェーズ -->
+  <div class="phase fade-in hidden" data-phase="done" style="padding-top:40px;">
+    <div class="pulse-2x" style="font-size:64px; margin-bottom:12px;">🎉</div>
+    <div class="done-title" style="color:#FF6B6B;">よくできたね！</div>
+    <div class="done-sub">Letter A の音を覚えたね</div>
+    <div class="stars" id="starsDone" style="justify-content:center;"></div>
+    <button id="restartBtn" class="btn-outline-teal" style="margin-top:26px;">もう一度見る</button>
+  </div>
+</div>
+
+<script src="common.js"></script>
+<script src="letter-lesson.js"></script>
+</body>
+</html>
