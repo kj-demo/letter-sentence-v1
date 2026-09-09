@@ -41,6 +41,28 @@ function playCelebrationChime() {
   }
 }
 
+// 不正解時の「ブー」という効果音
+function playWrongBuzzer() {
+  try {
+    var AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    var ctx = new AudioCtx();
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
+    osc.type = "sawtooth";
+    osc.frequency.setValueAtTime(300, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + 0.32);
+    gain.gain.setValueAtTime(0.22, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.38);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.4);
+  } catch (e) {
+    /* no-op */
+  }
+}
+
 // 指定コンテナ内にスター(★)をcount個ハイライトして描画
 function renderStars(container, count) {
   container.innerHTML = "";

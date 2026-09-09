@@ -10,7 +10,7 @@
   var feedbackEl = document.getElementById("feedback");
   var quizActionsEl = document.getElementById("quizActions");
 
-  var SENTENCE = ["The", "cat", "sits", "on", "the", "mat", "."];
+  var SENTENCE = ["The", "shop", "sells", "fresh", "fish", "from", "the", "ship", "."];
   var SPEAKABLE = SENTENCE.filter(function (w) { return w !== "."; });
 
   var stars = 0;
@@ -44,13 +44,42 @@
 
   document.getElementById("playAllBtn").addEventListener("click", function () {
     var buttons = Array.prototype.filter.call(wordRowEl.children, function (el) { return el.tagName === "BUTTON"; });
-    buttons.forEach(function (btn, i) {
-      setTimeout(function () {
-        btn.style.background = "#FFC43D";
-        speak(btn.textContent);
-        setTimeout(function () { btn.style.background = "white"; }, 380);
-      }, i * 480);
+    var text = SPEAKABLE.join(" ");
+
+    // 各単語の文字位置（開始・終了）を事前計算し、読み上げ位置と単語ボタンを対応付ける
+    var offsets = [];
+    var pos = 0;
+    SPEAKABLE.forEach(function (w) {
+      offsets.push({ start: pos, end: pos + w.length });
+      pos += w.length + 1; // 半角スペース分
     });
+
+    try {
+      if (!window.speechSynthesis) return;
+      window.speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(text);
+      u.rate = 0.72; // ゆっくりめ
+      u.lang = "en-US";
+      var lastBtn = null;
+
+      u.onboundary = function (e) {
+        if (e.name && e.name !== "word") return;
+        var idx = -1;
+        for (var i = 0; i < offsets.length; i++) {
+          if (e.charIndex >= offsets[i].start && e.charIndex < offsets[i].end + 1) { idx = i; break; }
+        }
+        if (idx === -1) return;
+        if (lastBtn) lastBtn.style.background = "white";
+        lastBtn = buttons[idx];
+        if (lastBtn) lastBtn.style.background = "#FFC43D";
+      };
+      u.onend = function () {
+        if (lastBtn) lastBtn.style.background = "white";
+      };
+      window.speechSynthesis.speak(u);
+    } catch (e) {
+      /* no-op */
+    }
   });
 
   document.getElementById("toQuizBtn").addEventListener("click", function () {
@@ -109,6 +138,20 @@
     } else {
       btn.classList.add("shake");
       setTimeout(function () { btn.classList.remove("shake"); }, 400);
+      playWrongBuzzer();
+      feedbackEl.innerHTML = '<div class="feedback-row feedback-wrong">✕ Try again!</div>';
+
+      // 正しい文を一瞬ヒントとして表示してから、今までの進捗表示に戻す
+      var prevHTML = builtRowEl.innerHTML;
+      var hintEl = document.createElement("div");
+      hintEl.style.cssText =
+        "width:100%; font-family:'Nunito',sans-serif; font-style:italic; color:#B7AE9A; font-size:14px;";
+      hintEl.textContent = SENTENCE.join(" ").replace(" .", ".");
+      builtRowEl.innerHTML = "";
+      builtRowEl.appendChild(hintEl);
+      setTimeout(function () {
+        builtRowEl.innerHTML = prevHTML;
+      }, 1400);
     }
   }
 

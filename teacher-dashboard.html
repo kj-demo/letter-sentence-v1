@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>講師用ダッシュボード | AIこども英語教育</title>
+<link rel="stylesheet" href="style.css" />
+<style>
+  body { background: #22333B; }
+
+  .dash-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+  }
+
+  .dash-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    margin-bottom: 18px;
+  }
+  .dash-header .class-name {
+    font-size: 15px;
+    font-weight: 700;
+    opacity: 0.8;
+  }
+  .dash-header .month-label {
+    font-size: 26px;
+    font-weight: 800;
+  }
+
+  /* 月タイムライン：横スクロール、指でも押しやすい大きさ */
+  .month-timeline {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 6px 2px 18px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .month-btn {
+    flex: 0 0 auto;
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    border: none;
+    background: rgba(255,255,255,0.12);
+    color: white;
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .month-btn.active {
+    background: #FFC43D;
+    color: #22333B;
+  }
+
+  /* その月に割り当てられたコンテンツのカード（大ボタン） */
+  .unit-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .unit-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #FFFDF7;
+    border-radius: 24px;
+    padding: 22px 24px;
+    text-decoration: none;
+    box-shadow: 0 6px 0 rgba(0,0,0,0.18);
+  }
+  .unit-icon {
+    font-size: 48px;
+    width: 72px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .unit-info { flex: 1; }
+  .unit-module {
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 2px;
+  }
+  .unit-title {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    color: #22333B;
+  }
+  .unit-desc {
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    color: #5C6B73;
+    margin-top: 2px;
+  }
+  .unit-start {
+    flex-shrink: 0;
+    background: #22333B;
+    color: white;
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    padding: 16px 26px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .unit-card.placeholder {
+    background: rgba(255,255,255,0.08);
+    box-shadow: none;
+    justify-content: center;
+    color: rgba(255,255,255,0.6);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 28px;
+  }
+
+  /* 前後の月へ移動する大きな矢印ボタン */
+  .nav-arrows {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 22px;
+  }
+  .nav-arrow {
+    background: rgba(255,255,255,0.12);
+    color: white;
+    border: none;
+    border-radius: 999px;
+    padding: 16px 28px;
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .nav-arrow:disabled { opacity: 0.3; }
+</style>
+</head>
+<body>
+
+<div class="dash-wrap">
+  <div class="dash-header">
+    <div class="class-name">〇〇教室 ・ Aクラス</div>
+    <div class="month-label" id="monthLabel">1ヶ月目 / 12</div>
+  </div>
+
+  <div class="month-timeline" id="monthTimeline"></div>
+
+  <div class="unit-grid" id="unitGrid"></div>
+
+  <div class="nav-arrows">
+    <button class="nav-arrow" id="prevBtn">← 前の月</button>
+    <button class="nav-arrow" id="nextBtn">次の月 →</button>
+  </div>
+</div>
+
+<script src="teacher-dashboard.js"></script>
+</body>
+</html>
