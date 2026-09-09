@@ -3,21 +3,24 @@
 // href は各レッスンページへのパス。placeholder:true の月は「準備中」表示。
 var CURRICULUM = [
   { month: 1, units: [
-    { icon: "🔤", module: "モジュール2", title: "レターレッスン", desc: "Letter A の文字と音", href: "letter-lesson.html", color: "#FF6B6B" }
+    { icon: "🧩", module: "モジュール1", title: "パズル（トピックレッスン）", desc: "文字なし・絵と音でCATを覚える", href: "puzzle.html", color: "#9B95D5" },
+    { icon: "🐾", module: "モジュール1", title: "どうぶつクイズ", desc: "文字なし・音を聞いて絵を選ぶ", href: "choose-animal.html", color: "#9B95D5" }
   ]},
   { month: 2, units: [
-    { icon: "🔤", module: "モジュール2", title: "レターレッスン（復習）", desc: "Letter A の文字と音", href: "letter-lesson.html", color: "#FF6B6B" }
+    { icon: "🔤", module: "モジュール2", title: "レターレッスン", desc: "Letter A の文字と音", href: "letter-lesson.html", color: "#FF6B6B" }
   ]},
   { month: 3, units: [
-    { icon: "🚢", module: "モジュール3", title: "ブレンディング", desc: "sh + ip = ship", href: "blending.html", color: "#06AED5" }
+    { icon: "🔤", module: "モジュール2", title: "レターレッスン（復習）", desc: "Letter A の文字と音", href: "letter-lesson.html", color: "#FF6B6B" }
   ]},
   { month: 4, units: [
-    { icon: "🚢", module: "モジュール3", title: "ブレンディング（復習）", desc: "sh + ip = ship", href: "blending.html", color: "#06AED5" }
+    { icon: "🚢", module: "モジュール3", title: "ブレンディング", desc: "sh + ip = ship", href: "blending.html", color: "#06AED5" }
   ]},
   { month: 5, units: [
+    { icon: "🚢", module: "モジュール3", title: "ブレンディング（復習）", desc: "sh + ip = ship", href: "blending.html", color: "#06AED5" }
+  ]},
+  { month: 6, units: [
     { icon: "📖", module: "モジュール6", title: "センテンスリーディング", desc: "The shop sells fresh fish from the ship.", href: "sentence-reading.html", color: "#FFC43D" }
   ]},
-  { month: 6, units: [] },
   { month: 7, units: [] },
   { month: 8, units: [] },
   { month: 9, units: [] },

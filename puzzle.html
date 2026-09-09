@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>パズル | AIこども英語教育 プロトタイプ</title>
+<link rel="stylesheet" href="style.css" />
+<style>
+  .puzzle-wrap {
+    width: 240px;
+    height: 240px;
+    margin: 0 auto 22px;
+    position: relative;
+  }
+  .puzzle-hint {
+    position: absolute;
+    inset: 0;
+    opacity: 0.22;
+  }
+  .puzzle-grid {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 4px;
+  }
+  .slot {
+    border: 3px dashed #CBBFAE;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: rgba(255,255,255,0.35);
+  }
+  .slot.filled {
+    border: 3px solid transparent;
+    cursor: default;
+    background: none;
+  }
+  .slot.wrong-shake { animation: shakeX 0.4s ease; }
+  .tray {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+  }
+  .piece-btn {
+    width: 76px;
+    height: 76px;
+    border-radius: 12px;
+    border: 3px solid #06AED5;
+    background: #F0FBFB;
+    cursor: pointer;
+    padding: 0;
+    overflow: hidden;
+  }
+  .piece-btn.selected {
+    border-color: #FFC43D;
+    box-shadow: 0 0 0 3px rgba(255,196,61,0.4);
+  }
+  .piece-btn.used { visibility: hidden; }
+  .piece-btn svg, .slot svg { width: 100%; height: 100%; display: block; }
+</style>
+</head>
+<body>
+
+<div class="card" id="app">
+  <div class="confetti-layer" id="confetti"></div>
+
+  <div class="card-header">
+    <span class="card-title">パズル ・ モジュール1</span>
+    <div class="stars" id="stars"></div>
+  </div>
+
+  <div class="phase fade-in" data-phase="puzzle">
+    <p class="subtitle">きいて、おなじえになるようにパズルをかんせいさせよう</p>
+
+    <button id="listenBtn" class="btn-outline-gold" style="display:flex; margin:0 auto 20px;">🔊</button>
+
+    <div class="puzzle-wrap">
+      <svg class="puzzle-hint" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <path d="M60 60 L75 25 L95 65 Z" fill="#F2A65A"/><path d="M140 60 L125 25 L105 65 Z" fill="#F2A65A"/><path d="M68 55 L76 38 L86 60 Z" fill="#FADCC2"/><path d="M132 55 L124 38 L114 60 Z" fill="#FADCC2"/><circle cx="100" cy="95" r="48" fill="#F2A65A"/><ellipse cx="100" cy="150" rx="55" ry="42" fill="#F2A65A"/><circle cx="80" cy="92" r="6" fill="#2E2320"/><circle cx="120" cy="92" r="6" fill="#2E2320"/><path d="M92 108 Q100 114 108 108" stroke="#2E2320" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M100 102 L94 108 L106 108 Z" fill="#E4795C"/><path d="M55 100 L20 95 M55 108 L18 108 M55 116 L20 122" stroke="#2E2320" stroke-width="1.5" stroke-linecap="round"/><path d="M145 100 L180 95 M145 108 L182 108 M145 116 L180 122" stroke="#2E2320" stroke-width="1.5" stroke-linecap="round"/><ellipse cx="70" cy="180" rx="16" ry="12" fill="#FADCC2"/><ellipse cx="130" cy="180" rx="16" ry="12" fill="#FADCC2"/><path d="M150 165 Q185 150 175 100" stroke="#F2A65A" stroke-width="16" fill="none" stroke-linecap="round"/>
+      </svg>
+      <div class="puzzle-grid" id="puzzleGrid"></div>
+    </div>
+
+    <div class="tray" id="tray"></div>
+
+    <div id="feedback"></div>
+  </div>
+
+  <div class="phase fade-in hidden" data-phase="done" style="padding-top:20px;">
+    <div class="pulse-2x" style="font-size:64px; margin-bottom:12px;">🎉</div>
+    <div class="done-title" style="color:#FF6B6B;">せいかい！</div>
+    <div class="done-sub">CAT のパズルができたね</div>
+    <div class="stars" id="starsDone" style="justify-content:center;"></div>
+    <button id="restartBtn" class="btn-outline-teal" style="margin-top:26px;">もう一度あそぶ</button>
+  </div>
+</div>
+
+<script src="common.js"></script>
+<script src="puzzle.js"></script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>レインボー | AIこども英語教育 プロトタイプ</title>
+<link rel="stylesheet" href="style.css" />
+<style>
+  .passage {
+    text-align: left;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    line-height: 1.9;
+    color: #3A3A3A;
+    background: #F0FBFB;
+    border: 2px solid #06AED5;
+    border-radius: 16px;
+    padding: 16px 18px;
+    margin-bottom: 16px;
+  }
+  .sentence {
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 1px 2px;
+  }
+  .sentence.active { background: #FFC43D; }
+  .roygbiv-row {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .roygbiv-chip {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+  }
+  .color-btn {
+    border: none;
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: white;
+    cursor: pointer;
+  }
+  .color-built {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 6px 10px;
+    border-radius: 10px;
+    color: white;
+  }
+</style>
+</head>
+<body>
+
+<div class="card" id="app">
+  <div class="confetti-layer" id="confetti"></div>
+
+  <div class="card-header">
+    <span class="card-title">CLIL：レインボー（基礎）</span>
+    <div class="stars" id="stars"></div>
+  </div>
+
+  <div class="phase fade-in" data-phase="reading">
+    <p class="subtitle">文章を読んで、聞いてみよう</p>
+
+    <div class="passage" id="passage"></div>
+
+    <button id="playAllBtn" class="btn-outline-gold" style="margin-bottom:18px;">🔊 全文を聞く</button>
+
+    <p class="subtitle" style="margin-bottom:8px;">おぼえかた：ROYGBIV</p>
+    <div class="roygbiv-row" id="roygbivHint"></div>
+
+    <button id="toQuizBtn" class="btn-primary">クイズにチャレンジ →</button>
+  </div>
+
+  <div class="phase fade-in hidden" data-phase="quiz">
+    <p class="subtitle">ROYGBIV の じゅんばんに色をタップしよう</p>
+
+    <div id="builtRow" style="min-height:46px; display:flex; flex-wrap:wrap; gap:6px; justify-content:center; align-items:center; margin-bottom:18px; padding:10px 12px; background:#FFFDF7; border:2px dashed #E2DCCB; border-radius:16px;">
+      <span id="builtPlaceholder" style="font-family:'Nunito',sans-serif; color:#B7AE9A; font-size:13px;">ここに色がならびます</span>
+    </div>
+
+    <div id="colorTray" style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:22px;"></div>
+
+    <div id="feedback"></div>
+  </div>
+
+  <div class="phase fade-in hidden" data-phase="done" style="padding-top:20px;">
+    <div class="pulse-2x" style="font-size:64px; margin-bottom:12px;">🌈</div>
+    <div class="done-title" style="color:#9B5DE5;">レインボーみつけた！</div>
+    <div class="done-sub">ROYGBIV をおぼえられたね</div>
+    <div class="stars" id="starsDone" style="justify-content:center;"></div>
+    <button id="restartBtn" class="btn-outline-teal" style="margin-top:26px;">もう一度あそぶ</button>
+  </div>
+</div>
+
+<script src="common.js"></script>
+<script src="clil-rainbow.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>どうぶつクイズ | AIこども英語教育 プロトタイプ</title>
+<link rel="stylesheet" href="style.css" />
+<style>
+  .animal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 14px;
+    width: 260px;
+    height: 260px;
+    margin: 0 auto 20px;
+  }
+  .animal-btn {
+    border: 3px solid #E2DCCB;
+    border-radius: 16px;
+    background: #FFFDF7;
+    cursor: pointer;
+    padding: 6px;
+  }
+  .animal-btn:active { transform: scale(0.97); }
+  .animal-btn.correct-flash { border-color: #2E7D32; background: #EAF7EC; }
+  .animal-btn.wrong-shake { animation: shakeX 0.4s ease; border-color: #FF6B6B; }
+  .animal-btn svg { width: 100%; height: 100%; display: block; }
+</style>
+</head>
+<body>
+
+<div class="card" id="app">
+  <div class="confetti-layer" id="confetti"></div>
+
+  <div class="card-header">
+    <span class="card-title">どうぶつクイズ ・ モジュール1</span>
+    <div class="stars" id="stars"></div>
+  </div>
+
+  <div class="phase fade-in" data-phase="quiz">
+    <p class="subtitle">きいて、おなじどうぶつをえらぼう</p>
+
+    <button id="listenBtn" class="btn-outline-gold" style="display:flex; margin:0 auto 20px;">🔊</button>
+
+    <div class="animal-grid" id="animalGrid"></div>
+  </div>
+
+  <div class="phase fade-in hidden" data-phase="done" style="padding-top:20px;">
+    <div class="pulse-2x" style="font-size:64px; margin-bottom:12px;">🎉</div>
+    <div class="done-title" style="color:#FF6B6B;">せいかい！</div>
+    <div class="done-sub">CAT をえらべたね</div>
+    <div class="stars" id="starsDone" style="justify-content:center;"></div>
+    <button id="restartBtn" class="btn-outline-teal" style="margin-top:26px;">もう一度あそぶ</button>
+  </div>
+</div>
+
+<script src="common.js"></script>
+<script src="choose-animal.js"></script>
+</body>
+</html>
