@@ -13,23 +13,24 @@
   var stars = 0;
 
   var SENTENCES = [
-    "A rainbow appears when sunlight passes through raindrops in the sky.",
-    "Each raindrop acts like a tiny prism, bending the light into many colors.",
-    "A rainbow always shows seven colors in the same order.",
-    "We remember them with a special word: ROYGBIV.",
-    "That means red, orange, yellow, green, blue, indigo, and violet.",
-    "Red sits on the outside, and violet sits on the inside.",
-    "Next time it rains, try to find all seven colors in the sky!"
+    { text: "A rainbow appears when sunlight passes through raindrops in the sky." },
+    { text: "Each raindrop acts like a tiny prism, bending the light into many colors." },
+    { text: "A rainbow always shows seven colors in the same order." },
+    { text: "We remember them with a special word: ROYGBIV.",
+      speech: "We remember them with a special word: Roy-jee-biv." },
+    { text: "That means red, orange, yellow, green, blue, indigo, and violet." },
+    { text: "Red sits on the outside, and violet sits on the inside." },
+    { text: "Next time it rains, try to find all seven colors in the sky!" }
   ];
 
   var COLORS = [
-    { name: "Red", letter: "R", speakLetter: "R", hex: "#E63946", text: "#FFFFFF" },
-    { name: "Orange", letter: "O", speakLetter: "O", hex: "#F3722C", text: "#FFFFFF" },
-    { name: "Yellow", letter: "Y", speakLetter: "Y", hex: "#F9C74F", text: "#5C4A00" },
-    { name: "Green", letter: "G", speakLetter: "gee", hex: "#6A994E", text: "#FFFFFF" },
-    { name: "Blue", letter: "B", speakLetter: "B", hex: "#277DA1", text: "#FFFFFF" },
-    { name: "Indigo", letter: "I", speakLetter: "I", hex: "#4B3F72", text: "#FFFFFF" },
-    { name: "Violet", letter: "V", speakLetter: "V", hex: "#9B5DE5", text: "#FFFFFF" }
+    { name: "Red", letter: "R", speakLetter: "are", hex: "#E63946", text: "#FFFFFF" },
+    { name: "Orange", letter: "O", speakLetter: "oh", hex: "#F3722C", text: "#FFFFFF" },
+    { name: "Yellow", letter: "Y", speakLetter: "why", hex: "#F9C74F", text: "#5C4A00" },
+    { name: "Green", letter: "G", speakLetter: "jee", hex: "#6A994E", text: "#FFFFFF" },
+    { name: "Blue", letter: "B", speakLetter: "bee", hex: "#277DA1", text: "#FFFFFF" },
+    { name: "Indigo", letter: "I", speakLetter: "eye", hex: "#4B3F72", text: "#FFFFFF" },
+    { name: "Violet", letter: "V", speakLetter: "vee", hex: "#9B5DE5", text: "#FFFFFF" }
   ];
 
   // ---- 音読パート ----
@@ -39,10 +40,10 @@
       var span = document.createElement("span");
       span.className = "sentence";
       span.dataset.idx = i;
-      span.textContent = s + " ";
+      span.textContent = s.text + " ";
       span.addEventListener("click", function () {
         highlightSentence(i);
-        speak(s, 0.9);
+        speak(s.speech || s.text, 0.9);
       });
       passageEl.appendChild(span);
     });
@@ -60,7 +61,7 @@
     highlightSentence(i);
     try {
       window.speechSynthesis.cancel();
-      var u = new SpeechSynthesisUtterance(SENTENCES[i]);
+      var u = new SpeechSynthesisUtterance(SENTENCES[i].speech || SENTENCES[i].text);
       u.rate = 0.9;
       u.lang = "en-US";
       u.onend = function () { playAllSentences(i + 1); };
@@ -99,29 +100,25 @@
     chip.style.outline = "3px solid #22333B";
   }
 
-  function playRoygbivAll(i) {
-    i = i || 0;
+  function playRoygbivAll() {
     var chips = roygbivHint.querySelectorAll(".roygbiv-chip");
-    if (i >= COLORS.length) {
-      chips.forEach(function (el) { el.style.outline = "none"; });
-      return;
-    }
-    highlightHintChip(chips[i]);
+    chips.forEach(function (el) { el.style.outline = "3px solid #22333B"; });
     try {
       window.speechSynthesis.cancel();
-      var u = new SpeechSynthesisUtterance(COLORS[i].speakLetter);
-      u.rate = 0.8;
+      var u = new SpeechSynthesisUtterance("Roy-jee-biv");
+      u.rate = 0.85;
       u.lang = "en-US";
-      u.onend = function () { playRoygbivAll(i + 1); };
-      u.onerror = function () { playRoygbivAll(i + 1); };
+      var clear = function () { chips.forEach(function (el) { el.style.outline = "none"; }); };
+      u.onend = clear;
+      u.onerror = clear;
       window.speechSynthesis.speak(u);
     } catch (e) {
-      playRoygbivAll(i + 1);
+      chips.forEach(function (el) { el.style.outline = "none"; });
     }
   }
 
   document.getElementById("playRoygbivBtn").addEventListener("click", function () {
-    playRoygbivAll(0);
+    playRoygbivAll();
   });
 
   document.getElementById("toQuizBtn").addEventListener("click", function () {
