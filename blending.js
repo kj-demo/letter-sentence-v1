@@ -19,15 +19,15 @@
 
   // ---- レッスンフェーズ ----
   document.getElementById("onsetBtn").addEventListener("click", function (e) {
-    speak(TARGET.onset);
+    playSound(TARGET.onset, TARGET.onset);
   });
   document.getElementById("rimeBtn").addEventListener("click", function (e) {
-    speak(TARGET.rime);
+    playSound(TARGET.rime, TARGET.rime);
   });
   document.getElementById("blendBtn").addEventListener("click", function () {
     document.getElementById("onsetBtn").classList.add("bounce");
     document.getElementById("rimeBtn").classList.add("bounce");
-    speak(TARGET.word);
+    playSound(TARGET.word, TARGET.word);
     setTimeout(function () {
       document.getElementById("onsetBtn").classList.remove("bounce");
       document.getElementById("rimeBtn").classList.remove("bounce");
@@ -74,7 +74,7 @@
     if (onset === TARGET.onset) {
       stars = Math.min(5, stars + 1);
       renderStars(starsEl, stars);
-      speak(TARGET.word);
+      playSound(TARGET.word, TARGET.word);
       wordDisplayEl.innerHTML =
         '<span style="color:#22333B;">' + TARGET.onset + TARGET.rime + "</span>";
       feedbackEl.innerHTML =

@@ -19,14 +19,14 @@
   // ---- レッスンフェーズ ----
   document.getElementById("letterBtn").addEventListener("click", function (e) {
     e.currentTarget.classList.add("bounce");
-    speak(TARGET.sound);
+    playSound(TARGET.sound, TARGET.sound);
     setTimeout(function () {
       e.currentTarget.classList.remove("bounce");
     }, 500);
   });
 
   document.getElementById("wordBtn").addEventListener("click", function () {
-    speak(TARGET.word);
+    playSound(TARGET.word, TARGET.word);
   });
 
   document.getElementById("toQuizBtn").addEventListener("click", function () {
@@ -56,7 +56,7 @@
   }
 
   document.getElementById("replaySoundBtn").addEventListener("click", function () {
-    speak(TARGET.sound);
+    playSound(TARGET.sound, TARGET.sound);
   });
 
   function handleChoice(ch, btn) {

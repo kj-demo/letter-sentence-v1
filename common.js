@@ -15,6 +15,33 @@ function speak(text, rate, lang) {
   }
 }
 
+// 収録済みの実音声ファイル（あればこちらを優先）。key: 音声ファイルのパス
+var AUDIO_FILES = {
+  "a": "audio/A_sound.mp3",
+  "Apple": "audio/Apple_sound.mp3",
+  "sh": "audio/sh_sound.mp3",
+  "ip": "audio/ip_sound.mp3",
+  "ship": "audio/ship_sound.mp3"
+};
+
+// 実音声ファイルがあればそれを再生し、なければAI音声（speak）にフォールバックする
+function playSound(key, fallbackText, rate, lang) {
+  var src = AUDIO_FILES[key];
+  if (src) {
+    try {
+      var audio = new Audio(src);
+      var played = audio.play();
+      if (played && typeof played.catch === "function") {
+        played.catch(function () { speak(fallbackText || key, rate, lang); });
+      }
+      return;
+    } catch (e) {
+      /* フォールバックへ */
+    }
+  }
+  speak(fallbackText || key, rate, lang);
+}
+
 // Duolingo風の達成チャイム（上昇アルペジオ）を合成音で再生
 function playCelebrationChime() {
   try {

@@ -36,7 +36,7 @@
       "font-family:'Baloo 2',sans-serif; font-weight:700; font-size:20px; color:#22333B; cursor:pointer;";
     btn.addEventListener("click", function () {
       btn.style.background = "#FFC43D";
-      speak(word);
+      playSound(word, word);
       setTimeout(function () { btn.style.background = "white"; }, 400);
     });
     wordRowEl.appendChild(btn);
