@@ -23,13 +23,13 @@
   ];
 
   var COLORS = [
-    { name: "Red", letter: "R", hex: "#E63946", text: "#FFFFFF" },
-    { name: "Orange", letter: "O", hex: "#F3722C", text: "#FFFFFF" },
-    { name: "Yellow", letter: "Y", hex: "#F9C74F", text: "#5C4A00" },
-    { name: "Green", letter: "G", hex: "#6A994E", text: "#FFFFFF" },
-    { name: "Blue", letter: "B", hex: "#277DA1", text: "#FFFFFF" },
-    { name: "Indigo", letter: "I", hex: "#4B3F72", text: "#FFFFFF" },
-    { name: "Violet", letter: "V", hex: "#9B5DE5", text: "#FFFFFF" }
+    { name: "Red", letter: "R", speakLetter: "R", hex: "#E63946", text: "#FFFFFF" },
+    { name: "Orange", letter: "O", speakLetter: "O", hex: "#F3722C", text: "#FFFFFF" },
+    { name: "Yellow", letter: "Y", speakLetter: "Y", hex: "#F9C74F", text: "#5C4A00" },
+    { name: "Green", letter: "G", speakLetter: "gee", hex: "#6A994E", text: "#FFFFFF" },
+    { name: "Blue", letter: "B", speakLetter: "B", hex: "#277DA1", text: "#FFFFFF" },
+    { name: "Indigo", letter: "I", speakLetter: "I", hex: "#4B3F72", text: "#FFFFFF" },
+    { name: "Violet", letter: "V", speakLetter: "V", hex: "#9B5DE5", text: "#FFFFFF" }
   ];
 
   // ---- 音読パート ----
@@ -82,10 +82,47 @@
       chip.className = "roygbiv-chip";
       chip.style.background = c.hex;
       chip.style.color = c.text;
+      chip.style.cursor = "pointer";
       chip.textContent = c.letter;
+      // 表示は文字（例：G）のまま、読み上げだけ speakLetter（例：gee）を使う
+      chip.addEventListener("click", function () {
+        highlightHintChip(chip);
+        speak(c.speakLetter, 0.8);
+      });
       roygbivHint.appendChild(chip);
     });
   }
+
+  function highlightHintChip(chip) {
+    var chips = roygbivHint.querySelectorAll(".roygbiv-chip");
+    chips.forEach(function (el) { el.style.outline = "none"; });
+    chip.style.outline = "3px solid #22333B";
+  }
+
+  function playRoygbivAll(i) {
+    i = i || 0;
+    var chips = roygbivHint.querySelectorAll(".roygbiv-chip");
+    if (i >= COLORS.length) {
+      chips.forEach(function (el) { el.style.outline = "none"; });
+      return;
+    }
+    highlightHintChip(chips[i]);
+    try {
+      window.speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(COLORS[i].speakLetter);
+      u.rate = 0.8;
+      u.lang = "en-US";
+      u.onend = function () { playRoygbivAll(i + 1); };
+      u.onerror = function () { playRoygbivAll(i + 1); };
+      window.speechSynthesis.speak(u);
+    } catch (e) {
+      playRoygbivAll(i + 1);
+    }
+  }
+
+  document.getElementById("playRoygbivBtn").addEventListener("click", function () {
+    playRoygbivAll(0);
+  });
 
   document.getElementById("toQuizBtn").addEventListener("click", function () {
     buildQuiz();
