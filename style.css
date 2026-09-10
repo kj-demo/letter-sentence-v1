@@ -43,6 +43,13 @@ a { color: inherit; }
 .phase { text-align: center; }
 .hidden { display: none !important; }
 
+rt {
+  font-size: 0.55em;
+  color: #8A8378;
+  font-weight: 600;
+  user-select: none;
+}
+
 .subtitle {
   font-family: 'Nunito', sans-serif;
   color: #5C6B73;
