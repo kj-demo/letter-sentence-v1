@@ -78,7 +78,23 @@
       </svg>
     </div>
 
-    <button id="toQuizBtn" class="btn-primary">クイズにチャレンジ →</button>
+    <button id="toQuizBtn" class="btn-primary">つぎへ →</button>
+  </div>
+
+  <div class="phase fade-in hidden" data-phase="jp2en">
+    <p class="subtitle">にほんごの ぶんに あうように、えいごの ことばを ならべよう</p>
+    <div class="passage" id="jp2enPrompt" style="font-size:16px; text-align:center;"></div>
+    <div id="jp2enBuilt" style="min-height:46px; display:flex; flex-wrap:wrap; gap:6px; justify-content:center; align-items:center; margin:14px 0; padding:10px 12px; background:#FFFDF7; border:2px dashed #E2DCCB; border-radius:16px;"></div>
+    <div id="jp2enTray" style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:16px;"></div>
+    <div id="jp2enFeedback"></div>
+  </div>
+
+  <div class="phase fade-in hidden" data-phase="en2jp">
+    <p class="subtitle">えいごの ぶんに あうように、にほんごの ことばを ならべよう</p>
+    <div class="passage" id="en2jpPrompt" style="font-size:16px; text-align:center;"></div>
+    <div id="en2jpBuilt" style="min-height:46px; display:flex; flex-wrap:wrap; gap:6px; justify-content:center; align-items:center; margin:14px 0; padding:10px 12px; background:#FFFDF7; border:2px dashed #E2DCCB; border-radius:16px;"></div>
+    <div id="en2jpTray" style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:16px;"></div>
+    <div id="en2jpFeedback"></div>
   </div>
 
   <div class="phase fade-in hidden" data-phase="quiz">

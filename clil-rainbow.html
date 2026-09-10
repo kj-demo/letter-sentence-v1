@@ -84,7 +84,26 @@
     <div class="roygbiv-row" id="roygbivHint"></div>
     <button id="playRoygbivBtn" class="btn-outline-gold" style="margin-bottom:18px;">🔊 ROYGBIVを聞く</button>
 
-    <button id="toQuizBtn" class="btn-primary">クイズにチャレンジ →</button>
+    <button id="toQuizBtn" class="btn-primary">つぎへ →</button>
+  </div>
+
+  <div class="phase fade-in hidden" data-phase="fillblank">
+    <p class="subtitle">あなうめ もんだいに ちょうせん</p>
+    <div class="passage" id="fillblankSentence" style="font-size:18px; text-align:center;"></div>
+    <div id="fillblankOptions" style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin:18px 0;"></div>
+    <div id="fillblankFeedback"></div>
+  </div>
+
+  <div class="phase fade-in hidden" data-phase="repeat">
+    <p class="subtitle">おなじように よんでみよう（リピート れんしゅう）</p>
+    <div class="passage" id="repeatSentence" style="font-size:17px; text-align:center;"></div>
+    <button id="repeatListenBtn" class="btn-outline-gold" style="margin-bottom:14px;">🔊 おてほんを聞く</button>
+    <div>
+      <button id="repeatMicBtn" class="btn-primary" style="max-width:260px; margin:0 auto;">🎤 話してみよう</button>
+    </div>
+    <p id="repeatStatus" style="font-family:'Nunito',sans-serif; color:#5C6B73; font-size:13px; margin-top:14px;"></p>
+    <div id="repeatFeedback"></div>
+    <button id="repeatNextBtn" class="btn-outline-teal hidden" style="margin-top:14px;">つぎへ →</button>
   </div>
 
   <div class="phase fade-in hidden" data-phase="quiz">

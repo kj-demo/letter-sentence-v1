@@ -122,6 +122,140 @@
   });
 
   document.getElementById("toQuizBtn").addEventListener("click", function () {
+    buildFillBlank();
+    showPhase(app, "fillblank");
+  });
+
+  // ---- 穴埋め問題 ----
+  var FILLBLANK = {
+    before: "A rainbow always shows",
+    after: "colors in the same order.",
+    answer: "seven",
+    options: ["five", "six", "seven", "eight"]
+  };
+
+  function buildFillBlank() {
+    var el = document.getElementById("fillblankSentence");
+    el.innerHTML = FILLBLANK.before + ' <span style="display:inline-block; min-width:70px; border-bottom:3px solid #9B95D5; color:#9B95D5; font-weight:800;">＿＿＿＿＿</span> ' + FILLBLANK.after;
+
+    var optsEl = document.getElementById("fillblankOptions");
+    var fbFeedback = document.getElementById("fillblankFeedback");
+    optsEl.innerHTML = "";
+    fbFeedback.innerHTML = "";
+    var shuffled = FILLBLANK.options.slice().sort(function () { return Math.random() - 0.5; });
+    shuffled.forEach(function (opt) {
+      var btn = document.createElement("button");
+      btn.textContent = opt;
+      btn.style.cssText =
+        "padding:12px 20px; border-radius:14px; border:none; color:white; font-family:'Baloo 2',sans-serif;" +
+        "font-weight:700; font-size:16px; cursor:pointer; background:#9B95D5; box-shadow:0 5px 0 rgba(0,0,0,0.12);";
+      btn.addEventListener("click", function () { handleFillBlank(opt, btn, el); });
+      optsEl.appendChild(btn);
+    });
+  }
+
+  function handleFillBlank(opt, btn, el) {
+    var fbFeedback = document.getElementById("fillblankFeedback");
+    if (opt === FILLBLANK.answer) {
+      el.innerHTML = FILLBLANK.before + ' <span style="color:#2E7D32; font-weight:800;">' + FILLBLANK.answer + '</span> ' + FILLBLANK.after;
+      speak(FILLBLANK.before + " " + FILLBLANK.answer + " " + FILLBLANK.after, 0.9);
+      fbFeedback.innerHTML = '<div class="feedback-row feedback-correct">✔ Great job!</div>';
+      playCelebrationChime();
+      var nextBtn = document.createElement("button");
+      nextBtn.className = "btn-primary";
+      nextBtn.textContent = "つぎへ →";
+      nextBtn.style.marginTop = "10px";
+      nextBtn.addEventListener("click", function () {
+        buildRepeat();
+        showPhase(app, "repeat");
+      });
+      fbFeedback.appendChild(nextBtn);
+      document.querySelectorAll("#fillblankOptions button").forEach(function (b) { b.disabled = true; b.style.opacity = "0.5"; });
+      btn.style.opacity = "1";
+    } else {
+      btn.classList.add("shake");
+      setTimeout(function () { btn.classList.remove("shake"); }, 400);
+      playWrongBuzzer();
+      fbFeedback.innerHTML = '<div class="feedback-row feedback-wrong">✕ Try again!</div>';
+    }
+  }
+
+  // ---- 音読リピート練習（音声認識） ----
+  var REPEAT_SENTENCE = "Red sits on the outside, and violet sits on the inside.";
+
+  function buildRepeat() {
+    document.getElementById("repeatSentence").textContent = REPEAT_SENTENCE;
+    document.getElementById("repeatStatus").textContent = "";
+    document.getElementById("repeatFeedback").innerHTML = "";
+    document.getElementById("repeatNextBtn").classList.add("hidden");
+  }
+
+  document.getElementById("repeatListenBtn").addEventListener("click", function () {
+    speak(REPEAT_SENTENCE, 0.85);
+  });
+
+  function similarityScore(target, spoken) {
+    function norm(s) {
+      return s.toLowerCase().replace(/[^a-z\s]/g, "").split(/\s+/).filter(Boolean);
+    }
+    var t = norm(target), s = norm(spoken);
+    if (t.length === 0) return 0;
+    var matched = 0;
+    t.forEach(function (w) { if (s.indexOf(w) !== -1) matched++; });
+    return matched / t.length;
+  }
+
+  document.getElementById("repeatMicBtn").addEventListener("click", function () {
+    var statusEl = document.getElementById("repeatStatus");
+    var feedbackEl = document.getElementById("repeatFeedback");
+    var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) {
+      statusEl.textContent = "この端末・ブラウザは音声認識に対応していません。「できた」ボタンでも進めます。";
+      if (!document.getElementById("repeatManualOk")) {
+        var manualBtn = document.createElement("button");
+        manualBtn.id = "repeatManualOk";
+        manualBtn.className = "btn-outline-teal";
+        manualBtn.textContent = "できた！（手動で進む）";
+        manualBtn.style.marginTop = "10px";
+        manualBtn.addEventListener("click", onRepeatSuccess);
+        feedbackEl.appendChild(manualBtn);
+      }
+      return;
+    }
+    statusEl.textContent = "🎙️ 聞いています…";
+    try {
+      var recog = new SR();
+      recog.lang = "en-US";
+      recog.interimResults = false;
+      recog.maxAlternatives = 1;
+      recog.onresult = function (e) {
+        var transcript = e.results[0][0].transcript;
+        var score = similarityScore(REPEAT_SENTENCE, transcript);
+        statusEl.textContent = '聞き取った内容："' + transcript + '"';
+        if (score >= 0.6) {
+          onRepeatSuccess();
+        } else {
+          feedbackEl.innerHTML = '<div class="feedback-row feedback-wrong">✕ もう一度チャレンジ！</div>';
+          playWrongBuzzer();
+        }
+      };
+      recog.onerror = function (e) {
+        statusEl.textContent = "うまく聞き取れませんでした（" + e.error + "）。もう一度どうぞ。";
+      };
+      recog.start();
+    } catch (e) {
+      statusEl.textContent = "音声認識を開始できませんでした。";
+    }
+  });
+
+  function onRepeatSuccess() {
+    var feedbackEl = document.getElementById("repeatFeedback");
+    feedbackEl.innerHTML = '<div class="feedback-row feedback-correct">✔ Good job!</div>';
+    playCelebrationChime();
+    document.getElementById("repeatNextBtn").classList.remove("hidden");
+  }
+
+  document.getElementById("repeatNextBtn").addEventListener("click", function () {
     buildQuiz();
     showPhase(app, "quiz");
   });
