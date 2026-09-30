@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>アニマルアルファベット | AIこども英語教育 プロトタイプ</title>
+<link rel="stylesheet" href="style.css" />
+<style>
+  .aa-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: minmax(110px, auto);
+    gap: 14px;
+    width: 280px;
+    margin: 0 auto 22px;
+  }
+  .aa-card {
+    border: 3px solid #E2DCCB;
+    border-radius: 16px;
+    background: #FFFDF7;
+    cursor: pointer;
+    padding: 10px 6px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 110px;
+  }
+  .aa-card svg { width: 100%; max-height: 82px; display: block; }
+  .aa-card.done { border-color: #2E7D32; background: #EAF7EC; }
+  .aa-letters {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: #22333B;
+    min-height: 22px;
+    margin-top: 2px;
+  }
+  .aa-animal-btn {
+    border: 3px solid #E2DCCB;
+    border-radius: 16px;
+    background: #FFFDF7;
+    cursor: pointer;
+    padding: 8px;
+    min-height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .aa-animal-btn svg { width: 100%; max-height: 100px; display: block; }
+  .aa-animal-btn.wrong-shake { animation: shakeX 0.4s ease; border-color: #FF6B6B; }
+  .aa-animal-btn.correct-flash { border-color: #2E7D32; background: #EAF7EC; }
+  .aa-letter-tile {
+    padding: 10px 16px;
+    border-radius: 14px;
+    border: none;
+    color: white;
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    cursor: pointer;
+    background: #06AED5;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.12);
+  }
+  .aa-built-letter {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    color: white;
+    background: #06AED5;
+    border-radius: 10px;
+    padding: 6px 12px;
+  }
+  .aa-big-letter {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 800;
+    font-size: 56px;
+    color: #FF6B6B;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+</style>
+</head>
+<body>
+
+<div class="card" id="app">
+  <div class="confetti-layer" id="confetti"></div>
+
+  <div class="card-header">
+    <span class="card-title">アニマルアルファベット ・ フォニックス1</span>
+    <div class="stars" id="stars"></div>
+  </div>
+
+  <!-- ① たんごレッスン -->
+  <div class="phase fade-in" data-phase="vocab">
+    <p class="subtitle">えを タップして、なまえを おぼえよう</p>
+    <div class="aa-grid" id="vocabGrid"></div>
+    <button id="toSpellBtn" class="btn-primary" style="margin-top:6px;">つぎへ →</button>
+  </div>
+
+  <!-- ② スペリングクイズ -->
+  <div class="phase fade-in hidden" data-phase="spell">
+    <p class="subtitle">レターを ならべて つづりを かんせいさせよう</p>
+    <div id="spellAnimal" style="width:110px; height:110px; margin:0 auto 10px;"></div>
+    <div id="spellBuilt" style="min-height:46px; display:flex; flex-wrap:wrap; gap:6px; justify-content:center; align-items:center; margin-bottom:14px; padding:10px 12px; background:#FFFDF7; border:2px dashed #E2DCCB; border-radius:16px;"></div>
+    <div id="spellTray" style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:18px;"></div>
+    <div id="spellFeedback"></div>
+  </div>
+
+  <!-- ③ アルファベット逆引きクイズ -->
+  <div class="phase fade-in hidden" data-phase="reverse">
+    <p class="subtitle">この もじから はじまる どうぶつは どれ？</p>
+    <div class="aa-big-letter" id="reverseLetter"></div>
+    <div class="aa-grid" id="reverseGrid"></div>
+    <div id="reverseFeedback"></div>
+  </div>
+
+  <!-- 完了 -->
+  <div class="phase fade-in hidden" data-phase="done" style="padding-top:20px;">
+    <div class="pulse-2x" style="font-size:64px; margin-bottom:12px;">🎉</div>
+    <div class="done-title" style="color:#FF6B6B;">アルファベットマスター！</div>
+    <div class="done-sub">4つの どうぶつの なまえを おぼえたね</div>
+    <div class="stars" id="starsDone" style="justify-content:center;"></div>
+    <button id="restartBtn" class="btn-outline-teal" style="margin-top:26px;">もう一度あそぶ</button>
+  </div>
+</div>
+
+<script src="common.js"></script>
+<script src="animal-alphabet.js"></script>
+</body>
+</html>

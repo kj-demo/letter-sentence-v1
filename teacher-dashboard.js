@@ -7,7 +7,8 @@ var CURRICULUM = [
     { icon: "🐾", module: "プレフォニックス", title: "どうぶつクイズ", desc: "文字なし・音を聞いて絵を選ぶ", href: "choose-animal.html", color: "#9B95D5" }
   ]},
   { month: 2, units: [
-    { icon: "🔤", module: "フォニックス1", title: "レターレッスン", desc: "Letter A の文字と音", href: "letter-lesson.html", color: "#FF6B6B" }
+    { icon: "🔤", module: "フォニックス1", title: "レターレッスン", desc: "Letter A の文字と音", href: "letter-lesson.html", color: "#FF6B6B" },
+    { icon: "🐘", module: "フォニックス1", title: "アニマルアルファベット", desc: "動物の単語でアルファベットを覚える", href: "animal-alphabet.html", color: "#FF6B6B" }
   ]},
   { month: 3, units: [
     { icon: "🔤", module: "フォニックス1", title: "レターレッスン（復習）", desc: "Letter A の文字と音", href: "letter-lesson.html", color: "#FF6B6B" }
